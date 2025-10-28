@@ -7,55 +7,53 @@ export class Inter {
   
 }
 export interface Product {
-  Id?: number;
-  Name?: string;
-  Category?: string;
-  Views: number;
-  Description?: string;
-  IsAvailable? :boolean;
-  IsDonateable: boolean;
-  MoneyRaised?: number;
-  LenderId?: number;
-  Lender? : User;
-  BorrowerId?: number;
-  Borrower? : User;
-  LikedByUsers?: User[];
-  ImageUrls?: string[];
-  Reviews?: Review[];
+  id?: number;
+  name?: string;
+  category?: string;
+  views: number;
+  description?: string;
+  isAvailable? :boolean;
+  isDonateable: boolean;
+  moneyRaised?: number;
+  lenderId?: number;
+  lender? : User;
+  borrowerId?: number;
+  borrower? : User;
+  likedByUsers?: User[];
+  imageUrls?: string[];
+  reviews?: Review[];
 }
 export interface User{
-  Id?: number;
-  FirstName?: string;
-  LastName?: string;
-  PhoneNumber?: string;
-  Email?: string;
-  DateOfBirth?: Date;
-  Age?: number;
-  ProfilePictureUrl?: string;
-  Bio?: string;
-  Location?: string;
-  Permisions?: UserRole;
-  Balance?: number;
-  AvarageRating?: number;
-  ListedProducts?: Product[];
-  BorrowedProducts?: Product[];
-  LikedProducts?: Product[];
-  Reviews?: Review[];
-  IsVerified?: boolean;
-  IsBanned?: boolean;
-  LastLogin?: Date;
-  DateCreated?: Date;
+  id?: number;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  email?: string;
+  dateOfBirth?: Date;
+  age?: number;
+  profilePictureUrl?: string;
+  bio?: string;
+  location?: string;
+  permisions?: UserRole;
+  balance?: number;
+  avarageRating?: number;
+  listedProducts?: Product[];
+  borrowedProducts?: Product[];
+  likedProducts?: Product[];
+  reviews?: Review[];
+  isVerified?: boolean;
+  isBanned?: boolean;
+  lastLogin?: Date;
+  dateCreated?: Date;
 }
 export interface Review{
-  Id?: number;
-  ProductId?: number;
-  Product?: Product;
-  UserId?: number;
-  User?: User;
-  DateCreated?: Date;
-  Title?: string;
-  Content?: string;
-  Rating?: number;
+  id?: number;
+  productId?: number;
+  userId?: number;
+  dateCreated?: Date;
+  title?: string;
+  content?: string;
+  rating?: number;
 }
 
 export interface ApiResponse{

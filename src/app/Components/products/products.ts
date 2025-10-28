@@ -18,14 +18,17 @@ export class Products implements OnInit {
   productsArray: Product[] = [];
 
 
-  async ngOnInit(){
+  ngOnInit(){
     this.userService.loadUserRole();
-    await this.loadProducts();
+    this.loadProducts();
   }
 
-  private async loadProducts(){
 
-    this.productsArray = await lastValueFrom(this.productService.getProducts());
+  private loadProducts(){
+    this.productService.getProducts().subscribe(response => {
+      this.productsArray = response;
+      console.log(this.productsArray)
+    });
   }
   //    
   //LOADS ENUM of userrole- admin user or guest

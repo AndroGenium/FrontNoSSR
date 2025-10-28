@@ -126,10 +126,16 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain !important;
+    }
 }
 
 /* Status badge */
-.status-badge {
+.status-badge-available {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -140,6 +146,18 @@ body {
     font-size: 12px;
     font-weight: 600;
 }
+.status-badge-unavailable {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #da3333;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
 
 .status-badge.borrowed {
     background: #dc3545;

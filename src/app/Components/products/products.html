@@ -45,25 +45,25 @@
                 <div class="tool-card">
                     <div class="tool-image-container">
 
-                        @if ((item.ImageUrls?.[0]?.length ?? 0) < 11) {
+                        @if ((item.imageUrls?.[0]?.length ?? 0) < 11) {
                             <div class="tool-image">🔨</div>
                         }
                         @else {
                             <div class="tool-image">
-                                <img [src]="`${item.ImageUrls?.[0]}`" alt="">
+                                <img [src]="`${item.imageUrls?.[0]}`" alt="">
                             </div>
                         }
 
-                        @if (item.IsAvailable) {
-                            <div class="status-badge">Available</div>
+                        @if (item.isAvailable) {
+                            <div class="status-badge-available">Available</div>
                         }
                         @else {
-                            <div class="status-badge">Unavailable</div>
+                            <div class="status-badge-unavailable">Unavailable</div>
                         }
                     </div>
 
-                    <div class="tool-info">
-                        <div class="tool-name">{{item.Name}}</div>
+                    <div class="tool-info"> 
+                        <div class="tool-name">{{item.name}}</div>
                         <div class="tool-rating">
                             <!-- TO DO ADD RATING TO BACK AND FRONT RATING COUNT AND RATING SCORE-->
                             <span class="rating-stars">★★★★★</span>
@@ -71,7 +71,7 @@
                         </div>
                         <div class="money-raised">
                             <span class="raised-label">Raised:</span>
-                            <span class="raised-amount">{{item.MoneyRaised}}$</span>
+                            <span class="raised-amount">{{item.moneyRaised}}$</span>
                         </div>
                         <div class="tool-actions">
                             @if (!isGuest) {

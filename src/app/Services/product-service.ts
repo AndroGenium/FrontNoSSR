@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ProductService {
 
-  private apiProductUrl = 'http://localhost:7244/api/Product';
+  private apiProductUrl = 'https://localhost:7244/api/Product';
 
   constructor(private http: HttpClient) { }
 
@@ -16,4 +16,5 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.apiProductUrl}/get-products`);
   }
   
+  // https://localhost:7244/api/Product/get-products //
 }
