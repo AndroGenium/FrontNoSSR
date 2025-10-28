@@ -1,0 +1,102 @@
+
+<!-- Tools Page -->
+<div class="tools-container">
+    <!-- Header -->
+    <div class="tools-header">
+        <h1>Available Tools</h1>
+        <p>Borrow tools from our community</p>
+    </div>
+
+    <!-- Filters & Sort -->
+    <div class="filters-bar">
+        <div class="filter-group">
+            <!-- Category Filter -->
+            <select class="filter-select">
+                <option value="">All Categories</option>
+                <option value="power-tools">Power Tools</option>
+                <option value="hand-tools">Hand Tools</option>
+                <option value="gardening">Gardening</option>
+                <option value="electronics">Electronics</option>
+            </select>
+
+            <!-- Availability Filter -->
+            <select class="filter-select">
+                <option value="">All Status</option>
+                <option value="available">Available</option>
+                <option value="borrowed">Currently Borrowed</option>
+            </select>
+        </div>
+
+        <!-- Sort -->
+        <select class="sort-select">
+            <option value="newest">Newest First</option>
+            <option value="raised-high">Highest Donations</option>
+            <option value="raised-low">Lowest Donations</option>
+            <option value="rating">Highest Rated</option>
+            <option value="popular">Most Popular</option>
+        </select>
+    </div>
+
+    <!-- Tools Grid -->
+    <div class="tools-grid">
+        @if (productsArray.length != 0) 
+        {
+            @for (item of productsArray; track $index) {
+                <div class="tool-card">
+                    <div class="tool-image-container">
+
+                        @if ((item.ImageUrls?.[0]?.length ?? 0) < 11) {
+                            <div class="tool-image">🔨</div>
+                        }
+                        @else {
+                            <div class="tool-image">
+                                <img [src]="`${item.ImageUrls?.[0]}`" alt="">
+                            </div>
+                        }
+
+                        @if (item.IsAvailable) {
+                            <div class="status-badge">Available</div>
+                        }
+                        @else {
+                            <div class="status-badge">Unavailable</div>
+                        }
+                    </div>
+
+                    <div class="tool-info">
+                        <div class="tool-name">{{item.Name}}</div>
+                        <div class="tool-rating">
+                            <!-- TO DO ADD RATING TO BACK AND FRONT RATING COUNT AND RATING SCORE-->
+                            <span class="rating-stars">★★★★★</span>
+                            <span class="rating-count">245</span>
+                        </div>
+                        <div class="money-raised">
+                            <span class="raised-label">Raised:</span>
+                            <span class="raised-amount">{{item.MoneyRaised}}$</span>
+                        </div>
+                        <div class="tool-actions">
+                            @if (!isGuest) {
+                                <button class="btn-borrow">Borrow</button>
+                            }
+                            @else {
+                                <button class="btn-borrow" disabled>Log in to Borrow</button>
+                            }                   
+                            <button class="btn-wishlist">❤️</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        @else {
+            <p>No tools found.</p>
+        }
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <button class="pagination-btn">← Previous</button>
+        <button class="pagination-btn active">1</button>
+        <button class="pagination-btn">2</button>
+        <button class="pagination-btn">3</button>
+        <button class="pagination-btn">Next →</button>
+    </div>
+</div>

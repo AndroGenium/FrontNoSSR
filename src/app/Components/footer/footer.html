@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer</title>
+</head>
+<body>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <!-- Social -->
+                <div class="footer-logo-section">
+                    <div class="social-links">
+                        <button class="social-link" title="Facebook">f</button>
+                        <button class="social-link" title="Twitter">𝕏</button>
+                        <button class="social-link" title="Instagram">📷</button>
+                        <button class="social-link" title="LinkedIn">in</button>
+                    </div>
+                </div>
+
+                <!-- Company Links -->
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#" onclick="handleFooterClick('about')">About Us</a></li>
+                        <li><a href="#" onclick="handleFooterClick('careers')">Careers</a></li>
+                        <li><a href="#" onclick="handleFooterClick('press')">Press</a></li>
+                        <li><a href="#" onclick="handleFooterClick('blog')">Blog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support Links -->
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#" onclick="handleFooterClick('help')">Help Center</a></li>
+                        <li><a href="#" onclick="handleFooterClick('contact')">Contact Us</a></li>
+                        <li><a href="#" onclick="handleFooterClick('faq')">FAQ</a></li>
+                        <li><a href="#" onclick="handleFooterClick('shipping')">Shipping Info</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal Links -->
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#" onclick="handleFooterClick('privacy')">Privacy Policy</a></li>
+                        <li><a href="#" onclick="handleFooterClick('terms')">Terms of Service</a></li>
+                        <li><a href="#" onclick="handleFooterClick('cookies')">Cookie Policy</a></li>
+                        <li><a href="#" onclick="handleFooterClick('compliance')">Compliance</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="newsletter-section">
+                    <h4>Subscribe to our newsletter</h4>
+                    <div class="newsletter-input">
+                        <input type="email" placeholder="Enter your email" id="newsletterEmail">
+                        <button onclick="handleNewsletter()">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-links">
+                    <a href="#" onclick="handleFooterClick('sitemap')">Sitemap</a>
+                    <a href="#" onclick="handleFooterClick('accessibility')">Accessibility</a>
+                    <a href="#" onclick="handleFooterClick('sustainability')">Sustainability</a>
+                </div>
+                <div class="footer-bottom-right">
+                    © 2024 MyMarket. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Handle footer link clicks
+        function handleFooterClick(action) {
+            console.log('Footer action:', action);
+            // Make API calls or navigate here
+        }
+
+        // Handle newsletter subscription
+        function handleNewsletter() {
+            const email = document.getElementById('newsletterEmail').value;
+            if (email.trim()) {
+                console.log('Subscribe:', email);
+                // Make API call here
+                document.getElementById('newsletterEmail').value = '';
+            }
+        }
+
+        // Handle social link clicks
+        function handleSocialClick(platform) {
+            console.log('Social link:', platform);
+            // Navigate to social media or make API call
+        }
+    </script>
+</body>
+</html>

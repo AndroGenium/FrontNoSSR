@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - ToolsNearMe</title>
+</head>
+<body>
+    <main>
+        <div class="register-container">
+            <!-- Logo -->
+            <div class="register-logo">
+                <div class="logo-icon">T</div>
+                <span class="logo-text">Toolsnearme</span>
+            </div>
+
+            <!-- Header -->
+            <div class="register-header">
+                <h1>Create your account</h1>
+                <p>Join our community and start borrowing tools</p>
+            </div>
+
+            <!-- Form -->
+            <form class="register-form" id="registerForm">
+                <!-- Name Fields -->
+                <div class="name-fields">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" placeholder="Mclovin" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" required />
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="nerfminer@gmail.com" required />
+                </div>
+
+                <!-- Date of Birth -->
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="text" id="dob" placeholder="DD/MM/YYYY" />
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="JambaJuice" required />
+                </div>
+
+                <!-- Terms & Conditions -->
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms"/>
+                    <label for="terms">
+                        I agree to the <a href="#">Terms of Service</a>
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-register" id="registerBtn">
+                    Create Account
+                </button>
+
+                <!-- Guest Button -->
+                <a   [routerLink]="'/'">
+                    <button type="button" class="btn-guest" [routerLink]="['/']">
+                        Browse as Guest
+                    </button>
+                </a>
+
+            </form>
+
+            <!-- Sign In Link -->
+
+                <div class="signin-link">
+                    <p>Already have an account? <a  [routerLink]="'/Login'">Sign In</a></p>
+                </div>
+
+
+        </div>
+    </main>
+
+    <script>
+
+    </script>
+</body>
+</html>
