@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { Login } from './Pages/login/login';
 import { AccountCreation } from './Pages/account-creation/account-creation';
 import { HomePage } from './Pages/home-page/home-page';
+import { VerifyEmailPage } from './Pages/verify-email-page/verify-email-page';
 
 const routes: Routes = [
 
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'Login',
     component: Login
+  },
+  {
+    path: 'Verify',
+    component: VerifyEmailPage
   },
 ];
 

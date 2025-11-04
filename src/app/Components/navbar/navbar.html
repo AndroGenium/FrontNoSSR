@@ -1,4 +1,4 @@
-
+@let user = user$ | async;
 <!-- Navbar -->
 <nav class="navbar">
     <!-- Logo -->
@@ -26,19 +26,31 @@
         <button class="nav-action" title="Wishlist">❤️</button>
 
         
-        <div class="profile-wrapper">
-            
-            <a [routerLink]="'/Login'">
+
+        @if (user != null) {
+            <div class="profile-wrapper">
+                
+                
                 <button class="profile-btn" onclick="toggleDropdown()" >
                     <div class="profile-avatar">👤</div>
                     <span>Account</span>
                 </button>
-            </a>
-            <div class="dropdown-menu" id="dropdownMenu">
-                <a href="#" onclick="handleProfileClick('profile')">My Profile</a>
-                <a href="#" onclick="handleProfileClick('logout')">Logout</a>
+                
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#" onclick="handleProfileClick('profile')">My Profile</a>
+                    <a href="#" onclick="handleProfileClick('logout')">Logout</a>
+                </div>
             </div>
-        </div>
+        }
+        @else {
+            <a  class= "btn-login" [routerLink]="'/Login'">
+                Log In
+            </a>
+            <a  class= "btn-signup" [routerLink]="'/Signup'">
+                Sign Up
+            </a>
+        }
+
     </div>
 </nav>
 

@@ -1,0 +1,58 @@
+<div class="verify-container">
+  <!-- Logo -->
+  <div class="verify-logo">
+    <div class="logo-icon">T</div>
+    <span class="logo-text">Toolsnearme</span>
+  </div>
+
+  <!-- Header -->
+  <div class="verify-header">
+    <h1>Verify Your Email</h1>
+    <p>We've sent a 6-digit code to<br><span class="email-display">{{ userEmail }}</span></p>
+  </div>
+
+  <!-- Code Inputs -->
+  <form (ngSubmit)="onVerify()">
+    <div class="code-inputs">
+      <input 
+        #codeInput
+        *ngFor="let val of codeValues; let i = index"
+        type="text" 
+        maxlength="1" 
+        class="code-input"
+        [class.filled]="hasValue(i)"
+        [class.error]="showError"
+        [value]="codeValues[i]"
+        (input)="onInput($event, i)"
+        (keydown)="onKeyDown($event, i)"
+        (paste)="onPaste($event, i)"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="error-message" [class.show]="showError">{{ errorMessage }}</div>
+    <div class="success-message" [class.show]="showSuccess">{{ successMessage }}</div>
+
+    <button 
+      type="submit" 
+      class="btn-verify" 
+      [disabled]="isVerifying"
+    >
+      {{ isVerifying ? 'Verifying...' : 'Verify Email' }}
+    </button>
+  </form>
+
+  <!-- Resend Section -->
+  <div class="resend-section">
+    <p>Didn't receive the code?</p>
+    <button 
+      type="button"
+      class="btn-resend" 
+      [disabled]="resendDisabled"
+      (click)="onResend()"
+    >
+      Resend Code
+    </button>
+    <div class="timer">{{ timerDisplay }}</div>
+  </div>
+</div>

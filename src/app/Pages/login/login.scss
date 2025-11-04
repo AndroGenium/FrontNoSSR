@@ -163,7 +163,7 @@ body {
     opacity: 0.9;
 }
 
-/* Guest Button */
+
 .btn-guest {
     background: white;
     color: #333;
@@ -175,6 +175,7 @@ body {
     cursor: pointer;
     transition: all 0.2s ease;
     margin-top: 12px;
+    width: 100%;
 }
 
 .btn-guest:hover {

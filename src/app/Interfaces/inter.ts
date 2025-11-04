@@ -25,6 +25,7 @@ export interface Product {
 }
 export interface User{
   id?: number;
+  password?: string;
   firstName?: string;
   lastName?: string;
   phoneNumber?: string;

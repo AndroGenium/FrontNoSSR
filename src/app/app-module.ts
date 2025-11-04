@@ -9,6 +9,8 @@ import { Products } from './Components/products/products';
 import { AccountCreation } from './Pages/account-creation/account-creation';
 import { HomePage } from './Pages/home-page/home-page';
 import { Login } from './Pages/login/login';
+import { ReactiveFormsModule } from '@angular/forms';
+import { VerifyEmailPage } from './Pages/verify-email-page/verify-email-page';
 
 @NgModule({
   declarations: [
@@ -18,11 +20,13 @@ import { Login } from './Pages/login/login';
     Products,
     AccountCreation,
     HomePage,
-    Login
+    Login,
+    VerifyEmailPage
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
   providers: [

@@ -1,4 +1,4 @@
-
+@let user = user$ | async;
 <!-- Tools Page -->
 <div class="tools-container">
     <!-- Header -->
@@ -17,6 +17,7 @@
                 <option value="hand-tools">Hand Tools</option>
                 <option value="gardening">Gardening</option>
                 <option value="electronics">Electronics</option>
+                <option value="measuring-tools">Measuring Tools</option>
             </select>
 
             <!-- Availability Filter -->
@@ -74,7 +75,7 @@
                             <span class="raised-amount">{{item.moneyRaised}}$</span>
                         </div>
                         <div class="tool-actions">
-                            @if (!isGuest) {
+                            @if (user != null) {
                                 <button class="btn-borrow">Borrow</button>
                             }
                             @else {
@@ -92,11 +93,11 @@
     </div>
 
     <!-- Pagination -->
-    <div class="pagination">
+    <!-- <div class="pagination">
         <button class="pagination-btn">← Previous</button>
         <button class="pagination-btn active">1</button>
         <button class="pagination-btn">2</button>
         <button class="pagination-btn">3</button>
         <button class="pagination-btn">Next →</button>
-    </div>
+    </div> -->
 </div>
