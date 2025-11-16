@@ -12,45 +12,45 @@
         <div class="search-wrapper">
             <input 
                 type="text" 
-                id="searchInput"
-                placeholder="Search products..."
-                onkeyup="handleSearch(this.value)"
+                placeholder="Search tools..."
+                [(ngModel)]="searchQuery"
+                (keyup)="handleSearch()"
             >
             <span class="search-icon">🔍</span>
         </div>
-        <div class="search-results" id="searchResults"></div>
+        @if (showSearchResults) {
+            <div class="search-results">
+                @for (result of searchResults; track result) {
+                    <div class="search-result-item" (click)="selectResult(result)">
+                        {{ result }}
+                    </div>
+                }
+                @if (searchResults.length === 0) {
+                    <div class="search-result-item">No results found</div>
+                }
+            </div>
+        }
     </div>
 
     <!-- Right Actions -->
     <div class="nav-right">
         <button class="nav-action" title="Wishlist">❤️</button>
 
-        
-
         @if (user != null) {
             <div class="profile-wrapper">
-                
-                
-                <button class="profile-btn" onclick="toggleDropdown()" >
+                <button class="profile-btn" (click)="toggleDropdown()">
                     <div class="profile-avatar">👤</div>
                     <span>Account</span>
                 </button>
                 
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="#" onclick="handleProfileClick('profile')">My Profile</a>
-                    <a href="#" onclick="handleProfileClick('logout')">Logout</a>
+                <div class="dropdown-menu" [class.active]="dropdownOpen">
+                    <a (click)="navigateToProfile($event)">My Profile</a>
+                    <a (click)="logout($event)">Logout</a>
                 </div>
             </div>
+        } @else {
+            <a class="btn-login" [routerLink]="'/Login'">Log In</a>
+            <a class="btn-signup" [routerLink]="'/Signup'">Sign Up</a>
         }
-        @else {
-            <a  class= "btn-login" [routerLink]="'/Login'">
-                Log In
-            </a>
-            <a  class= "btn-signup" [routerLink]="'/Signup'">
-                Sign Up
-            </a>
-        }
-
     </div>
 </nav>
-

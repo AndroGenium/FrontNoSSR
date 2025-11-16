@@ -1,5 +1,5 @@
-import { Component, OnInit,OnDestroy,ViewChildren, QueryList, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../Services/auth-service';
 import { LocalUserService } from '../../Services/local-user-service';
 
@@ -18,7 +18,7 @@ export class VerifyEmailPage implements OnInit, OnDestroy {
   showError: boolean = false;
   showSuccess: boolean = false;
   isVerifying: boolean = false;
-
+  
   resendTimer: number = 60;
   resendDisabled: boolean = true;
   timerDisplay: string = '';
@@ -28,24 +28,34 @@ export class VerifyEmailPage implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService,
     private localUserService: LocalUserService
   ) {}
 
- ngOnInit(): void {
-  const pending = this.localUserService.pendingEmail;
-  if (!pending) {
-    // No email to verify, send back to signup
-    this.router.navigate(['/Signup']);
-    return;
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const email = params.get('email');
+      if (email) {
+        this.userEmail = email;
+        console.log('📧 Loaded verify page for:', this.userEmail);
+      }
+    });
+
+    this.startResendTimer();
+
+    setTimeout(() => {
+      const inputs = this.codeInputs?.toArray();
+      if (inputs && inputs.length > 0) {
+        inputs[0].nativeElement.focus();
+      }
+    }, 100);
   }
 
-  this.userEmail = pending;
-  this.startResendTimer();
-}
-
   ngOnDestroy(): void {
-    if (this.timerInterval) clearInterval(this.timerInterval);
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
   }
 
   onInput(event: Event, index: number): void {
@@ -61,22 +71,21 @@ export class VerifyEmailPage implements OnInit, OnDestroy {
     this.codeValues[index] = value;
     this.showError = false;
 
+    // Just move to next input, no auto-submit
     if (value && index < 5) {
-      this.codeInputs.toArray()[index + 1].nativeElement.focus();
-    }
-
-    if (this.codeValues.every(val => val !== '')) {
-      this.onVerify();
+      const inputs = this.codeInputs.toArray();
+      inputs[index + 1].nativeElement.focus();
     }
   }
 
   onKeyDown(event: KeyboardEvent, index: number): void {
     const input = event.target as HTMLInputElement;
+
     if (event.key === 'Backspace' && !input.value && index > 0) {
-      const prev = this.codeInputs.toArray()[index - 1];
-      prev.nativeElement.focus();
-      prev.nativeElement.value = '';
+      const inputs = this.codeInputs.toArray();
+      inputs[index - 1].nativeElement.focus();
       this.codeValues[index - 1] = '';
+      inputs[index - 1].nativeElement.value = '';
     }
   }
 
@@ -86,34 +95,64 @@ export class VerifyEmailPage implements OnInit, OnDestroy {
     const digits = pastedData.match(/\d/g);
 
     if (digits) {
+      const inputs = this.codeInputs.toArray();
       digits.forEach((digit, idx) => {
-        const input = this.codeInputs.toArray()[idx];
-        if (input) {
-          input.nativeElement.value = digit;
+        if (inputs[idx]) {
           this.codeValues[idx] = digit;
+          inputs[idx].nativeElement.value = digit;
         }
       });
-      if (digits.length === 6) this.onVerify();
+
+      if (digits.length === 6) {
+        inputs[5].nativeElement.focus();
+        // No auto-submit, just fill the inputs
+      }
     }
   }
 
+  // Only verify when button is clicked
   async onVerify(): Promise<void> {
     const code = this.codeValues.join('');
-    if (code.length !== 6) return;
+
+    if (code.length !== 6) {
+      this.showError = true;
+      this.errorMessage = 'Please enter all 6 digits';
+      return;
+    }
+
+    if (this.isVerifying) {
+      return;
+    }
 
     this.isVerifying = true;
     this.showError = false;
     this.showSuccess = false;
 
     try {
-      const response = await this.authService.verifyEmail(this.userEmail, code);
-      this.showSuccess = true;
-      this.successMessage = response.Message || 'Email verified successfully!';
+      console.log('🔍 Verifying:', this.userEmail, code);
 
-      setTimeout(() => this.router.navigate(['/Login']), 1500);
-    } catch (err: any) {
+      const response = await this.authService.verifyEmailCode(this.userEmail, code);
+
+      console.log('✅ Verify response:', response);
+
+      this.showSuccess = true;
+      this.successMessage = '✓ Email verified!';
+
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+        console.log('🔑 Token saved');
+      }
+
+      this.localUserService.refreshUser();
+
+      setTimeout(() => {
+        this.router.navigate(['/home']);
+      }, 1500);
+
+    } catch (error: any) {
+      console.error('❌ Verification failed:', error);
       this.showError = true;
-      this.errorMessage = err.error || 'Invalid code';
+      this.errorMessage = error?.error?.message || error?.error?.Message || 'Invalid code. Please try again.';
       this.clearInputs();
     } finally {
       this.isVerifying = false;
@@ -121,24 +160,41 @@ export class VerifyEmailPage implements OnInit, OnDestroy {
   }
 
   async onResend(): Promise<void> {
-    if (this.resendDisabled) return;
+    if (this.resendDisabled) {
+      return;
+    }
 
     try {
       await this.authService.resendVerificationCode(this.userEmail);
+
       this.startResendTimer();
-      alert('New code sent! Check your email.');
-    } catch (err) {
-      console.error(err);
-      alert('Failed to resend code. Try again.');
+
+      this.showSuccess = true;
+      this.successMessage = 'Code resent! Check your email.';
+      
+      setTimeout(() => {
+        this.showSuccess = false;
+      }, 3000);
+
+    } catch (error: any) {
+      console.error('❌ Resend failed:', error);
+      this.showError = true;
+      this.errorMessage = 'Failed to resend code. Please try again.';
     }
   }
 
   private startResendTimer(): void {
     this.resendDisabled = true;
     this.resendTimer = 60;
+
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
+
     this.timerInterval = setInterval(() => {
       this.resendTimer--;
-      this.timerDisplay = `Resend available in ${this.resendTimer}s`;
+      this.timerDisplay = `Resend in ${this.resendTimer}s`;
+
       if (this.resendTimer <= 0) {
         clearInterval(this.timerInterval);
         this.resendDisabled = false;
@@ -149,11 +205,20 @@ export class VerifyEmailPage implements OnInit, OnDestroy {
 
   private clearInputs(): void {
     this.codeValues = ['', '', '', '', '', ''];
-    this.codeInputs.toArray().forEach(input => input.nativeElement.value = '');
-    this.codeInputs.first.nativeElement.focus();
+    const inputs = this.codeInputs.toArray();
+    inputs.forEach(input => {
+      input.nativeElement.value = '';
+    });
+    if (inputs.length > 0) {
+      inputs[0].nativeElement.focus();
+    }
   }
 
   hasValue(index: number): boolean {
     return this.codeValues[index] !== '';
+  }
+
+  goBack(): void {
+    this.router.navigate(['/']);
   }
 }

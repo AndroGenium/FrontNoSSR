@@ -1,235 +1,305 @@
- * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            background: #fafafa;
-            color: #333;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+main{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background: #fafafa;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
 
-        /* Verify Container */
-        .verify-container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-            max-width: 500px;
-            width: 100%;
-            padding: 40px;
-        }
+/* Verify Container - Optimized for 250px */
+.verify-container {
 
-        /* Logo */
-        .verify-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  max-width: 400px;
+  width: 100%;
+  padding: 24px 16px;
+  min-width: 250px;
+}
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: #601A35;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 800;
-            font-size: 20px;
-        }
+/* Logo */
+.verify-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
 
-        .logo-text {
-            font-size: 24px;
-            font-weight: 700;
-            color: #601A35;
-        }
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  background: #601A35;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 800;
+  font-size: 18px;
+  flex-shrink: 0;
+}
 
-        /* Header */
-        .verify-header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
+.logo-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: #601A35;
+}
 
-        .verify-header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            margin-top: 16px;
-        }
+/* Header */
+.verify-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
 
-        .verify-header p {
-            color: #666;
-            font-size: 14px;
-            line-height: 1.5;
-        }
+.verify-header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  margin-top: 12px;
+}
 
-        .email-display {
-            color: #601A35;
-            font-weight: 600;
-        }
+.verify-header p {
+  color: #666;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
 
-        /* Code Input Container */
-        .code-inputs {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin: 32px 0;
-        }
+.email-display {
+  color: #601A35;
+  font-weight: 600;
+  font-size: 12px;
+  display: block;
+  word-break: break-all;
+  padding: 0 8px;
+}
 
-        .code-input {
-            width: 50px;
-            height: 60px;
-            text-align: center;
-            font-size: 24px;
-            font-weight: 700;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-            outline: none;
-        }
+/* Code Input Container */
+.code-inputs {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin: 20px 0;
+}
 
-        .code-input:focus {
-            border-color: #601A35;
-            box-shadow: 0 0 0 3px rgba(96, 26, 53, 0.1);
-        }
+.code-input {
+  width: 100%;
+  aspect-ratio: 1;
+  min-width: 32px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  outline: none;
+}
 
-        .code-input.filled {
-            border-color: #601A35;
-            background: #f9f9f9;
-        }
+.code-input:focus {
+  border-color: #601A35;
+  box-shadow: 0 0 0 2px rgba(96, 26, 53, 0.1);
+}
 
-        .code-input.error {
-            border-color: #dc3545;
-            animation: shake 0.3s ease;
-        }
+.code-input.filled {
+  border-color: #601A35;
+  background: #f9f9f9;
+}
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
+.code-input.error {
+  border-color: #dc3545;
+  animation: shake 0.3s ease;
+}
 
-        /* Error Message */
-        .error-message {
-            color: #dc3545;
-            font-size: 13px;
-            text-align: center;
-            margin-top: 12px;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
 
-        .error-message.show {
-            opacity: 1;
-        }
+/* Error & Success Messages */
+.error-message,
+.success-message {
+  font-size: 11px;
+  text-align: center;
+  margin-top: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  padding: 8px;
+  border-radius: 4px;
+}
 
-        /* Submit Button */
-        .btn-verify {
-            width: 100%;
-            background: #601A35;
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 24px;
-        }
+.error-message {
+  color: #dc3545;
+  background: #f8d7da;
+}
 
-        .btn-verify:hover:not(:disabled) {
-            opacity: 0.9;
-        }
+.success-message {
+  color: #155724;
+  background: #d4edda;
+}
 
-        .btn-verify:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
+.error-message.show,
+.success-message.show {
+  opacity: 1;
+}
 
-        /* Resend Section */
-        .resend-section {
-            text-align: center;
-            margin-top: 24px;
-            padding-top: 24px;
-            border-top: 1px solid #eee;
-        }
+/* Submit Button */
+.btn-verify {
+  width: 100%;
+  background: #601A35;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 16px;
+}
 
-        .resend-section p {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 12px;
-        }
+.btn-verify:hover:not(:disabled) {
+  opacity: 0.9;
+}
 
-        .btn-resend {
-            background: none;
-            border: none;
-            color: #601A35;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-        }
+.btn-verify:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
 
-        .btn-resend:hover {
-            text-decoration: underline;
-        }
+/* Resend Section */
+.resend-section {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
 
-        .btn-resend:disabled {
-            color: #ccc;
-            cursor: not-allowed;
-        }
+.resend-section p {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 8px;
+}
 
-        .timer {
-            font-size: 13px;
-            color: #999;
-            margin-top: 8px;
-        }
+.btn-resend {
+  background: none;
+  border: none;
+  color: #601A35;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 4px 8px;
+}
 
-        /* Success Message */
-        .success-message {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-            padding: 12px;
-            border-radius: 6px;
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-            display: none;
-        }
+.btn-resend:hover:not(:disabled) {
+  text-decoration: underline;
+}
 
-        .success-message.show {
-            display: block;
-        }
+.btn-resend:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
 
-        /* Responsive */
-        @media (max-width: 480px) {
-            .verify-container {
-                padding: 32px 24px;
-            }
+.timer {
+  font-size: 10px;
+  color: #999;
+  margin-top: 6px;
+}
 
-            .verify-header h1 {
-                font-size: 22px;
-            }
+/* Back Section */
+.back-section {
+  text-align: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+}
 
-            .code-inputs {
-                gap: 8px;
-            }
+.btn-back {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px;
+}
 
-            .code-input {
-                width: 45px;
-                height: 55px;
-                font-size: 20px;
-            }
-        }
+.btn-back:hover {
+  color: #601A35;
+  text-decoration: underline;
+}
+
+/* Media Queries */
+@media (min-width: 400px) {
+  .verify-container {
+    padding: 32px 24px;
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .logo-text {
+    font-size: 22px;
+  }
+
+  .verify-header h1 {
+    font-size: 24px;
+  }
+
+  .verify-header p {
+    font-size: 14px;
+  }
+
+  .email-display {
+    font-size: 14px;
+  }
+
+  .code-inputs {
+    gap: 8px;
+  }
+
+  .code-input {
+    min-width: 40px;
+    font-size: 20px;
+  }
+
+  .btn-verify {
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  .error-message,
+  .success-message {
+    font-size: 12px;
+  }
+
+  .resend-section p,
+  .btn-resend {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 280px) {
+  .code-inputs {
+    gap: 4px;
+  }
+
+  .code-input {
+    min-width: 28px;
+    font-size: 16px;
+  }
+}

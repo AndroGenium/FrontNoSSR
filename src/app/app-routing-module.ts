@@ -22,7 +22,7 @@ const routes: Routes = [
     component: Login
   },
   {
-    path: 'Verify',
+    path: 'Verify/:email',
     component: VerifyEmailPage
   },
 ];

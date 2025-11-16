@@ -1,85 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In - Toolsnearme</title>
-</head>
-<body>
-    <div class="signin-container">
-        <!-- Logo -->
-        <div class="signin-logo">
-            <div class="logo-icon">T</div>
-            <span class="logo-text">Toolsnearme</span>
-        </div>
-
-        <!-- Header -->
-        <div class="signin-header">
-            <h1>Welcome back</h1>
-            <p>Log in to your account to continue</p>
-        </div>
-
-        <!-- Form -->
-        <form class="signin-form" id="signinForm">
-            <!-- Email -->
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="nerfminer@gmail.com" required />
-            </div>
-
-            <!-- Password -->
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="JambaJuice" required />
-            </div>
-
-            <!-- Remember Me & Forgot Password -->
-            <div class="form-options">
-                <div class="remember-me">
-                    <input type="checkbox" id="remember" />
-                    <label for="remember">Remember me</label>
-                </div>
-                <a href="#" class="forgot-password">Forgot password?</a>
-            </div>
-
-            <!-- Submit Button -->
-            <button type="submit" class="btn-signin">
-                Log In
-            </button>
-
-            <!-- Guest Button -->
-             <a [routerLink]="'/'">
-                <button type="button" class="btn-guest">
-                         Go Back As Guest
-                </button>
-             </a>
-
-        </form>
-
-        <!-- Sign Up Link -->
-        <div class="signup-link">
-            <p>Don't have an account? <a [routerLink]="'/Signup'">Sign Up</a></p>
-        </div>
+<main>
+    <div class="login-container">
+    <!-- Logo -->
+    <div class="login-logo">
+        <div class="logo-icon">T</div>
+        <span class="logo-text">Toolsnearme</span>
     </div>
 
-    <script>
-        // Handle form submission
-        const signinForm = document.getElementById('signinForm');
+    <!-- Header -->
+    <div class="login-header">
+        <h1>Welcome back</h1>
+        <p>Log in to your account to continue</p>
+    </div>
 
-        signinForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // API CALL: POST /api/login
-            // Gather form data and send to backend
-            const formData = {
-                email: document.getElementById('email').value,
-                password: document.getElementById('password').value,
-                remember: document.getElementById('remember').checked
-            };
-            
-            console.log('Signing in user:', formData);
-            // Make your API call here
-        });
-    </script>
-</body>
-</html>
+    <!-- Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <!-- Email -->
+        <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+            type="email" 
+            id="email"
+            formControlName="email"
+            placeholder="nerfminer@gmail.com"
+            [class.error]="isFieldInvalid('email')"
+        />
+        @if (isFieldInvalid('email')) {
+            <span class="error-text">{{ getErrorMessage('email') }}</span>
+        }
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+            type="password" 
+            id="password"
+            formControlName="password"
+            placeholder="JambaJuice"
+            [class.error]="isFieldInvalid('password')"
+        />
+        @if (isFieldInvalid('password')) {
+            <span class="error-text">{{ getErrorMessage('password') }}</span>
+        }
+        </div>
+
+        <!-- Remember Me & Forgot Password -->
+        <div class="form-options">
+        <div class="remember-me">
+            <input 
+            type="checkbox" 
+            id="remember"
+            formControlName="remember"
+            />
+            <label for="remember">Remember me</label>
+        </div>
+        <button 
+            type="button" 
+            class="link-btn" 
+            (click)="navigateToForgotPassword()"
+        >
+            Forgot password?
+        </button>
+        </div>
+
+        <!-- Error Message -->
+        @if (showError) {
+        <div class="error-message">
+            {{ errorMsg }}
+        </div>
+        }
+
+        <!-- Submit Button -->
+        <button 
+        type="submit" 
+        class="btn-login"
+        [disabled]="submitting"
+        >
+        @if (submitting) {
+            <span>Logging in...</span>
+        } @else {
+            <span>Log In</span>
+        }
+        </button>
+
+        <!-- Guest Button -->
+        <button 
+        type="button" 
+        class="btn-guest"
+        (click)="continueAsGuest()"
+        [disabled]="submitting"
+        >
+        Continue as Guest
+        </button>
+    </form>
+
+    <!-- Sign Up Link -->
+    <div class="signup-link">
+        <p>
+        Don't have an account? 
+        <button 
+            type="button" 
+            class="link-btn" 
+            (click)="navigateToRegister()"
+        >
+            Sign Up
+        </button>
+        </p>
+    </div>
+    </div>
+</main>

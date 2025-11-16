@@ -35,7 +35,7 @@ export interface User{
   profilePictureUrl?: string;
   bio?: string;
   location?: string;
-  permisions?: UserRole;
+  role?: UserRole;
   balance?: number;
   avarageRating?: number;
   listedProducts?: Product[];

@@ -12,8 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './account-creation.html',
   styleUrl: './account-creation.scss',
 })
-export class AccountCreation implements OnInit{
-    registerForm!: FormGroup;
+export class AccountCreation implements OnInit {
+  registerForm!: FormGroup;
   submitting = false;
   errorMsg: string = '';
 
@@ -35,38 +35,33 @@ export class AccountCreation implements OnInit{
     });
   }
 
-  
-    async submit() {
-      if (this.registerForm.invalid) return;
+  async submit() {
+    if (this.registerForm.invalid) return;
 
-      this.submitting = true;
-      this.errorMsg = '';
+    this.submitting = true;
+    this.errorMsg = '';
 
-      const formData = this.registerForm.value;
+    const formData = this.registerForm.value;
 
-      try {
-        const response: any = await this.authService.registerUser({
-          FirstName: formData.firstName,
-          LastName: formData.lastName,
-          Email: formData.email,
-          BirthDate: formData.dob,
-          password: formData.password,
-        });
+    try {
+      const response: any = await this.authService.registerUser({
+        FirstName: formData.firstName,
+        LastName: formData.lastName,
+        Email: formData.email,
+        BirthDate: formData.dob,
+        password: formData.password,
+      });
 
-        // Save pending email in local user service
-        this.localUserService.pendingEmail = formData.email;
+      console.log('✅ Register response:', response);
+      console.log('📧 Navigating to verify-email for:', formData.email);
 
-        // Navigate to verify page
-        this.router.navigate(['/Verify']);
+      this.router.navigate(['/Verify', formData.email]);
 
-      } catch (err: any) {
-        console.error(err);
-        this.errorMsg = err?.error?.Message || 'Something went wrong. Please try again.';
-      } finally {
-        this.submitting = false;
-      }
+    } catch (err: any) {
+      console.error('❌ Registration failed:', err);
+      this.errorMsg = err?.error?.Message || err?.error?.message || 'Something went wrong. Please try again.';
+    } finally {
+      this.submitting = false;
     }
-
-
+  }
 }
-
