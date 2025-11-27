@@ -17,6 +17,18 @@ nav {
     z-index: 100;
 }
 
+.result-thumb {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 12px;
+}
+.search-result-item {
+    display: flex;
+    align-items: center;
+}
+
 /* Logo */
 .logo {
     display: flex;
@@ -352,4 +364,3 @@ nav {
 .profile-wrapper {
   position: relative;
 }
-

@@ -3,7 +3,7 @@
 <div class="tools-container">
     <!-- Header -->
     <div class="tools-header">
-        <h1>Available Tools</h1>
+        <h1>Current Tools</h1>
         <p>Borrow tools from our community</p>
     </div>
 
@@ -11,54 +11,76 @@
     <div class="filters-bar">
         <div class="filter-group">
             <!-- Category Filter -->
-            <select class="filter-select">
+            <select 
+                class="filter-select" 
+                id="category-filter"
+                [value]="selectedCategory"
+                (change)="onCategoryChange($event)"
+            >
                 <option value="">All Categories</option>
-                <option value="power-tools">Power Tools</option>
-                <option value="hand-tools">Hand Tools</option>
-                <option value="gardening">Gardening</option>
-                <option value="electronics">Electronics</option>
-                <option value="measuring-tools">Measuring Tools</option>
+                <option value="PowerTools">Power Tools</option>
+                <option value="AutomotiveTools">Automotive Tools</option>
+                <option value="HandTools">Hand Tools</option>
+                <option value="MeasuringTools">Measuring Tools</option>
+                <option value="CleaningTools">Cleaning Tools</option>
+                <option value="PlumbingTools">Plumbing Tools</option>
+                <option value="GardeningTools">Gardening</option>
+                <option value="ElectronicTools">Electronics</option>
+                <option value="Machinery">Machinery</option>
+                <option value="Other">Other</option>
             </select>
 
             <!-- Availability Filter -->
-            <select class="filter-select">
+            <select 
+                class="filter-select" 
+                id="availability-filter"
+                [value]="selectedAvailability"
+                (change)="onAvailabilityChange($event)"
+            >
                 <option value="">All Status</option>
-                <option value="available">Available</option>
-                <option value="borrowed">Currently Borrowed</option>
+                <option value="true">Available</option>
+                <option value="false">Currently Borrowed</option>
             </select>
         </div>
 
         <!-- Sort -->
-        <select class="sort-select">
-            <option value="newest">Newest First</option>
-            <option value="raised-high">Highest Donations</option>
-            <option value="raised-low">Lowest Donations</option>
-            <option value="rating">Highest Rated</option>
-            <option value="popular">Most Popular</option>
+        <select 
+            class="sort-select" 
+            id="sort-filter"
+            [value]="selectedSort"
+            (change)="onSortChange($event)"
+        >
+            <option value="">Default</option>
+            <option value="highestDonation">Highest Donations</option>
+            <option value="highestRated">Highest Rated</option>
+            <option value="mostLiked">Most Popular</option>
         </select>
     </div>
 
+    <!-- Loading State -->
+    @if (loading) {
+        <div class="loading-message">
+            <p>Loading tools...</p>
+        </div>
+    }
+
     <!-- Tools Grid -->
     <div class="tools-grid">
-        @if (productsArray.length != 0) 
-        {
-            @for (item of productsArray; track $index) {
+        @if (productsArray.length != 0 && !loading) {
+            @for (item of productsArray; track item.id) {
                 <div class="tool-card">
                     <div class="tool-image-container">
-
                         @if ((item.imageUrls?.[0]?.length ?? 0) < 11) {
                             <div class="tool-image">🔨</div>
-                        }
-                        @else {
+                        } @else {
                             <div class="tool-image">
-                                <img [src]="`${item.imageUrls?.[0]}`" alt="">
+                                <img [src]="item.imageUrls?.[0]" alt="{{item.name}}">
                             </div>
                         }
 
                         @if (item.isAvailable) {
                             <div class="status-badge-available">Available</div>
-                        }
-                        @else {
+                        } @else {
                             <div class="status-badge-unavailable">Unavailable</div>
                         }
                     </div>
@@ -66,19 +88,17 @@
                     <div class="tool-info"> 
                         <div class="tool-name">{{item.name}}</div>
                         <div class="tool-rating">
-                            <!-- TO DO ADD RATING TO BACK AND FRONT RATING COUNT AND RATING SCORE-->
                             <span class="rating-stars">★★★★★</span>
-                            <span class="rating-count">245</span>
+                            <span class="rating-count">{{item.likedByUsers?.length || 0}}</span>
                         </div>
                         <div class="money-raised">
                             <span class="raised-label">Raised:</span>
-                            <span class="raised-amount">{{item.moneyRaised}}$</span>
+                            <span class="raised-amount">${{item.moneyRaised}}</span>
                         </div>
                         <div class="tool-actions">
                             @if (user != null) {
                                 <button class="btn-borrow">Borrow</button>
-                            }
-                            @else {
+                            } @else {
                                 <button class="btn-borrow" disabled>Log in to Borrow</button>
                             }                   
                             <button class="btn-wishlist">❤️</button>
@@ -86,18 +106,11 @@
                     </div>
                 </div>
             }
-        }
-        @else {
-            <p>No tools found.</p>
+        } @else if (!loading && productsArray.length === 0) {
+            <div class="empty-state">
+                <p>No tools found with the selected filters.</p>
+                <button class="btn-reset" (click)="resetFilters()">Reset Filters</button>
+            </div>
         }
     </div>
-
-    <!-- Pagination -->
-    <!-- <div class="pagination">
-        <button class="pagination-btn">← Previous</button>
-        <button class="pagination-btn active">1</button>
-        <button class="pagination-btn">2</button>
-        <button class="pagination-btn">3</button>
-        <button class="pagination-btn">Next →</button>
-    </div> -->
 </div>

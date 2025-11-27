@@ -10,7 +10,72 @@ body {
     background: #fafafa;
     color: #333;
 }
+.loading-message {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+  font-size: 16px;
+}
 
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  
+  p {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .btn-reset {
+    background: #601A35;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: opacity 0.2s ease;
+    
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+.loading-message {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+  font-size: 16px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  
+  p {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .btn-reset {
+    background: #601A35;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: opacity 0.2s ease;
+    
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
 /* Tools Container */
 .tools-container {
     max-width: 1400px;

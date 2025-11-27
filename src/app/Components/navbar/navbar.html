@@ -1,6 +1,5 @@
-@let user = user$ | async;
-<!-- Navbar -->
 <nav class="navbar">
+    
     <!-- Logo -->
     <a routerLink="/" class="logo">
         <div class="logo-icon">T</div>
@@ -14,43 +13,53 @@
                 type="text" 
                 placeholder="Search tools..."
                 [(ngModel)]="searchQuery"
-                (keyup)="handleSearch()"
+                (input)="handleSearch()"
             >
             <span class="search-icon">🔍</span>
         </div>
-        @if (showSearchResults) {
-            <div class="search-results">
-                @for (result of searchResults; track result) {
-                    <div class="search-result-item" (click)="selectResult(result)">
-                        {{ result }}
-                    </div>
-                }
-                @if (searchResults.length === 0) {
-                    <div class="search-result-item">No results found</div>
-                }
+
+        <div class="search-results" [class.active]="showSearchResults">
+            <ng-container *ngIf="searchResults.length > 0">
+                <div 
+                  class="search-result-item"
+                  *ngFor="let item of searchResults"
+                  (click)="selectResult(item)"
+                >
+                    <img [src]="item.imageUrl" alt="" class="result-thumb">
+                    <span>{{ item.name }}</span>
+                </div>
+            </ng-container>
+
+            <div *ngIf="searchResults.length === 0" class="search-result-item">
+                No results found
             </div>
-        }
+        </div>
     </div>
 
-    <!-- Right Actions -->
+    <!-- Right side -->
     <div class="nav-right">
         <button class="nav-action" title="Wishlist">❤️</button>
 
-        @if (user != null) {
+        <ng-container *ngIf="user$ | async as user; else notLogged">
+
             <div class="profile-wrapper">
                 <button class="profile-btn" (click)="toggleDropdown()">
                     <div class="profile-avatar">👤</div>
                     <span>Account</span>
                 </button>
-                
+
                 <div class="dropdown-menu" [class.active]="dropdownOpen">
                     <a (click)="navigateToProfile($event)">My Profile</a>
                     <a (click)="logout($event)">Logout</a>
                 </div>
             </div>
-        } @else {
+
+        </ng-container>
+
+        <ng-template #notLogged>
             <a class="btn-login" [routerLink]="'/Login'">Log In</a>
             <a class="btn-signup" [routerLink]="'/Signup'">Sign Up</a>
-        }
+        </ng-template>
     </div>
+
 </nav>

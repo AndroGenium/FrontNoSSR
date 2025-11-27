@@ -1,11 +1,8 @@
 import { LocalUserService } from './../../Services/local-user-service';
 import { Product, User } from './../../Interfaces/inter';
-import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { UserService } from '../../Services/user-service';
-import { Inter } from '../../Interfaces/inter';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../Services/product-service';
-import { lastValueFrom, Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -16,24 +13,76 @@ import { lastValueFrom, Observable, Subscription } from 'rxjs';
 export class Products implements OnInit {
 
   user$!: Observable<User | null>;
-  constructor(private localUserService: LocalUserService, private productService: ProductService){ 
-    this.user$ = localUserService.user$
-  }
-
-  // products array obv
   productsArray: Product[] = [];
-  //
-  
-  ngOnInit(): void {
+  loading: boolean = false;
 
-    //loads products
-    this.loadProducts();
-    //
+  // Filter states
+  selectedCategory: string = '';
+  selectedAvailability: string = '';
+  selectedSort: string = '';
+
+  constructor(
+    private localUserService: LocalUserService, 
+    private productService: ProductService
+  ) { 
+    this.user$ = localUserService.user$;
   }
-  private loadProducts(){
-    this.productService.getProducts().subscribe(response => {
-      this.productsArray = response;
-      console.log(this.productsArray)
-    });
+
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  // Load products with filters
+  private loadProducts(): void {
+    this.loading = true;
+
+    // Convert filter values
+    const category = this.selectedCategory || null;
+    const isAvailable = this.selectedAvailability 
+      ? this.selectedAvailability === 'true' 
+      : null;
+    const sortBy = this.selectedSort || null;
+
+    this.productService.getFilteredProducts(category, isAvailable, sortBy)
+      .subscribe({
+        next: (response) => {
+          this.productsArray = response;
+          console.log('✅ Loaded products:', this.productsArray);
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('❌ Failed to load products:', error);
+          this.loading = false;
+        }
+      });
+  }
+
+  // Handle category filter change
+  onCategoryChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.selectedCategory = select.value;
+    this.loadProducts();
+  }
+
+  // Handle availability filter change
+  onAvailabilityChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.selectedAvailability = select.value;
+    this.loadProducts();
+  }
+
+  // Handle sort change
+  onSortChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.selectedSort = select.value;
+    this.loadProducts();
+  }
+
+  // Reset filters
+  resetFilters(): void {
+    this.selectedCategory = '';
+    this.selectedAvailability = '';
+    this.selectedSort = '';
+    this.loadProducts();
   }
 }
