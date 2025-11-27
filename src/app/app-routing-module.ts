@@ -4,6 +4,7 @@ import { Login } from './Pages/login/login';
 import { AccountCreation } from './Pages/account-creation/account-creation';
 import { HomePage } from './Pages/home-page/home-page';
 import { VerifyEmailPage } from './Pages/verify-email-page/verify-email-page';
+import { ProductPage } from './Pages/product-page/product-page';
 
 const routes: Routes = [
 
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'Verify/:email',
     component: VerifyEmailPage
+  },
+  {
+    path: 'Product/:id',
+    component: ProductPage
   },
 ];
 

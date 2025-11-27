@@ -1,0 +1,57 @@
+<div class="product-page-container" *ngIf="product">
+  <div class="product-main">
+    <!-- Product Images -->
+    <div class="product-images">
+      <img class="main-image" [src]="selectedImage || product.imageUrls[0]" alt="{{product.name}}" />
+      <!-- <div class="thumbnail-container" *ngIf="product.ImageUrls.length > 1">
+        <img
+          class="thumbnail"
+          *ngFor="let img of product.ImageUrls"
+          [src]="img"
+          (click)="selectImage(img)"
+          [class.active]="img === selectedImage"
+          alt="{{product.Name}}"
+        />
+      </div> -->
+    </div>
+
+    <!-- Product Details -->
+    <div class="product-details">
+      <h1 class="product-name">{{ product.name }}</h1>
+
+      <div class="product-rating">
+        @for (item of createRange(5); track $index) {
+            @if(product.avarageRating != null){
+                <span [class.filled]="$index < product.avarageRating">★</span>
+            }
+        }
+        <span class="rating-count">({{ product.ratingCount }})</span>
+      </div>
+
+      <p class="product-description">{{ product.description }}</p>
+
+      <div class="product-info">
+        <p><strong>Availability:</strong>
+          <span [class.available]="product.isAvailable" [class.unavailable]="!product.isAvailable">
+            {{ product.isAvailable ? 'Available' : 'Unavailable' }}
+          </span>
+        </p>
+        <p><strong>Donateable:</strong> {{ product.isDonateable ? 'Yes' : 'No' }}</p>
+        <p><strong>Money Raised:</strong> ${{ product.moneyRaised }}</p>
+        <p><strong>Lender:</strong> {{ product.lenderEmail || 'N/A' }}</p>
+      </div>
+
+      <div class="product-actions">
+        <button [disabled]="!product.isAvailable" class="btn-borrow">
+          Log in to Borrow
+        </button>
+        <button class="btn-like">❤️</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+@if(!product){
+    <div class="loading">Loading product...</div>
+}

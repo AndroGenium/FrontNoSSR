@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { VerifyEmailPage } from './Pages/verify-email-page/verify-email-page';
 import { authInterceptor } from './interceptors/auth-interceptor';
 import { FormsModule } from '@angular/forms';
+import { ProductPage } from './Pages/product-page/product-page';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FormsModule } from '@angular/forms';
     AccountCreation,
     HomePage,
     Login,
-    VerifyEmailPage
+    VerifyEmailPage,
+    ProductPage
   ],
   imports: [
     FormsModule,

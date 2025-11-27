@@ -1,0 +1,133 @@
+.product-page-container {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  max-width: 1200px;
+  margin: auto;
+
+  .product-main {
+    display: flex;
+    gap: 40px;
+
+    .product-images {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      .main-image {
+        width: 100%;
+        border-radius: 12px;
+        object-fit: cover;
+        max-height: 500px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      }
+
+      .thumbnail-container {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+
+        .thumbnail {
+          width: 60px;
+          height: 60px;
+          object-fit: cover;
+          border-radius: 6px;
+          cursor: pointer;
+          border: 2px solid transparent;
+          transition: 0.2s;
+
+          &.active {
+            border-color: #601A35;
+          }
+        }
+      }
+    }
+
+    .product-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      .product-name {
+        font-size: 28px;
+        font-weight: bold;
+        color: #601A35;
+        margin-bottom: 16px;
+      }
+
+      .product-rating {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+
+        span {
+          font-size: 18px;
+          color: #FFD700;
+
+          &.filled {
+            color: #FFD700;
+          }
+        }
+
+        .rating-count {
+          margin-left: 8px;
+          color: #666;
+          font-size: 14px;
+        }
+      }
+
+      .product-description {
+        margin-bottom: 24px;
+        font-size: 16px;
+        color: #333;
+      }
+
+      .product-info {
+        margin-bottom: 24px;
+
+        p {
+          font-size: 16px;
+          margin: 6px 0;
+
+          .available { color: green; font-weight: bold; }
+          .unavailable { color: red; font-weight: bold; }
+        }
+      }
+
+      .product-actions {
+        display: flex;
+        gap: 16px;
+
+        .btn-borrow {
+          background: #601A35;
+          color: white;
+          padding: 12px 24px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+
+          &:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+          }
+        }
+
+        .btn-like {
+          background: #fff;
+          color: #601A35;
+          border: 2px solid #601A35;
+          padding: 12px 24px;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.loading {
+  font-size: 20px;
+  color: #666;
+  text-align: center;
+  margin-top: 100px;
+}

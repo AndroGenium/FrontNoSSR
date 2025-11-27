@@ -23,7 +23,7 @@ export interface Product {
   likedByUsers?: User[];
   likedByUserIds?: number[];
   likedByUserEmails?: string[];
-  imageUrls?: string[];
+  imageUrls: string[];
   ratingSum?: number;
   ratingCount?: number;
   avarageRating?: number;
